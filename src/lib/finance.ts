@@ -113,7 +113,7 @@ export function monthlySeries(income: Income[], expenses: Expense[], n = 6) {
 
 export function toCSV(rows: Record<string, unknown>[]) {
   if (!rows.length) return "";
-  const headers = Object.keys(rows[0]);
+  const headers = Object.keys(rows[0] ?? {});
   const esc = (v: unknown) => {
     const s = v == null ? "" : String(v);
     return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;

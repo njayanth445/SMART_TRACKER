@@ -46,7 +46,7 @@ export function HistoryPage({ kind }: { kind: "expense" | "income" }) {
 
   function exportCsv() {
     const data = kind === "expense" ? (ex.data ?? []).filter((r) => rows.some((x) => x.id === r.id)) : (inc.data ?? []).filter((r) => rows.some((x) => x.id === r.id));
-    if (!data.length) return toast.error("Nothing to export.");
+    if (!data.length) { toast.error("Nothing to export."); return; }
     downloadFile(`smart-ledger-${kind}.csv`, toCSV(data.map(({ id: _id, created_at: _c, ...rest }) => rest as Record<string, unknown>)));
   }
 

@@ -46,15 +46,15 @@ export function ProfileForm({ profile, onSubmit, submitting, submitLabel }: { pr
   async function onPhoto(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
     if (!f) return;
-    if (!f.type.startsWith("image/")) return toast.error("Please choose an image.");
+    if (!f.type.startsWith("image/")) { toast.error("Please choose an image."); return; }
     setV({ ...v, avatar_url: await resizeToDataUrl(f) });
   }
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!v.full_name.trim()) return toast.error("Please enter your name.");
-    if (v.phone && !/^[+\d\s-]{7,15}$/.test(v.phone)) return toast.error("Please enter a valid phone number.");
-    if (v.monthly_income != null && v.monthly_income < 0) return toast.error("Income can't be negative.");
+    if (!v.full_name.trim()) { toast.error("Please enter your name."); return; }
+    if (v.phone && !/^[+\d\s-]{7,15}$/.test(v.phone)) { toast.error("Please enter a valid phone number."); return; }
+    if (v.monthly_income != null && v.monthly_income < 0) { toast.error("Income can't be negative."); return; }
     onSubmit(v);
   }
 

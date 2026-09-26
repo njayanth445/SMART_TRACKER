@@ -36,7 +36,7 @@ function Budgets() {
   async function add(e: React.FormEvent) {
     e.preventDefault();
     const a = Number(amount);
-    if (!a || a <= 0) return toast.error("Enter a budget amount greater than 0.");
+    if (!a || a <= 0) { toast.error("Enter a budget amount greater than 0."); return; }
     try {
       await save.mutateAsync({ category, amount: a, month, year });
       toast.success(`${category} budget saved`);

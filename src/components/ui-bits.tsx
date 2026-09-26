@@ -29,7 +29,7 @@ export function Panel({ title, children, className, action }: { title?: string; 
   );
 }
 
-export function StatCard({ label, value, icon: Icon, tone = "primary", hint }: { label: string; value: string; icon: LucideIcon; tone?: "primary" | "income" | "expense" | "accent"; hint?: string }) {
+export function StatCard({ label, value, icon: Icon, tone = "primary", hint }: { label: string; value: string; icon: LucideIcon; tone?: "primary" | "income" | "expense" | "accent"; hint?: string | undefined }) {
   const toneCls = { primary: "bg-primary/12 text-primary", income: "bg-income/15 text-income", expense: "bg-expense/15 text-expense", accent: "bg-accent/40 text-accent-foreground" }[tone];
   return (
     <div className="glass rounded-2xl p-4 sm:p-5">

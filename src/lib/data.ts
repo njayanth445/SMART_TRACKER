@@ -99,7 +99,7 @@ function friendly(e: unknown) {
 
 /** Check whether this expense pushed its category budget past a threshold; notify once per crossing. */
 async function checkBudgetAlert(category: string, date: string) {
-  const [y, m] = date.split("-").map(Number);
+  const [y = 0, m = 0] = date.split("-").map(Number);
   const { data: budget } = await supabase.from("budgets").select("*").eq("category", category).eq("month", m).eq("year", y).maybeSingle();
   if (!budget) return;
   const { data: rows } = await supabase.from("expenses").select("amount,date").eq("category", category).gte("date", `${y}-${String(m).padStart(2, "0")}-01`);
@@ -126,7 +126,7 @@ async function checkBudgetAlert(category: string, date: string) {
 export function useSaveExpense() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (input: Omit<Expense, "id" | "created_at"> & { id?: string }) => {
+    mutationFn: async (input: Omit<Expense, "id" | "created_at"> & { id?: string | undefined }) => {
       const { id, ...rest } = input;
       const res = id ? await supabase.from("expenses").update(rest).eq("id", id) : await supabase.from("expenses").insert(rest);
       if (res.error) throw friendly(res.error);
@@ -142,7 +142,7 @@ export function useSaveExpense() {
 export function useSaveIncome() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (input: Omit<Income, "id" | "created_at"> & { id?: string }) => {
+    mutationFn: async (input: Omit<Income, "id" | "created_at"> & { id?: string | undefined }) => {
       const { id, ...rest } = input;
       const res = id ? await supabase.from("income").update(rest).eq("id", id) : await supabase.from("income").insert(rest);
       if (res.error) throw friendly(res.error);
