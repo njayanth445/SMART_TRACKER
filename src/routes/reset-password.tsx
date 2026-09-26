@@ -25,10 +25,10 @@ function Reset() {
   const [c, setC] = useState("");
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (pw.length < 8) return toast.error("Password must be at least 8 characters.");
-    if (pw !== c) return toast.error("Passwords do not match.");
+    if (pw.length < 8) { toast.error("Password must be at least 8 characters."); return; }
+    if (pw !== c) { toast.error("Passwords do not match."); return; }
     const { error } = await supabase.auth.updateUser({ password: pw });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Password updated.");
     nav({ to: "/dashboard" });
   }

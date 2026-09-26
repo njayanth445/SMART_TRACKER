@@ -44,7 +44,7 @@ function Reports() {
       ...incRows.map((r) => ({ type: "Income", date: r.date, category: r.source, description: r.description ?? "", payment_method: "", amount: r.amount })),
       ...exRows.map((r) => ({ type: "Expense", date: r.date, category: r.category, description: r.description, payment_method: r.payment_method, amount: r.amount })),
     ].sort((a, b) => a.date.localeCompare(b.date));
-    if (!rows.length) return toast.error("No transactions in this period.");
+    if (!rows.length) { toast.error("No transactions in this period."); return; }
     downloadFile(`smart-ledger-${type}-report-${prefix}.csv`, toCSV(rows));
     toast.success("Report exported");
   }

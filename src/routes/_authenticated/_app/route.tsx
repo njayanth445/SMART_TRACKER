@@ -98,11 +98,11 @@ function AppShell() {
 
       {/* Mobile bottom nav */}
       <nav className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-5 items-center rounded-2xl border border-border bg-popover/90 p-1.5 shadow-lg backdrop-blur-xl lg:hidden">
-        {[nav[0], nav[1]].map((n) => <MobileItem key={n.to} to={n.to} icon={n.icon} label={t(lang, n.key)} />)}
+        {[nav[0]!, nav[1]!].map((n) => <MobileItem key={n.to} to={n.to} icon={n.icon} label={t(lang, n.key)} />)}
         <Link to="/expenses/add" aria-label={t(lang, "addExpense")} className="mx-auto grid h-12 w-12 -translate-y-3 place-items-center rounded-2xl bg-brand text-primary-foreground shadow-lg">
           <Plus className="h-6 w-6" />
         </Link>
-        {[nav[3], nav[4]].map((n) => <MobileItem key={n.to} to={n.to} icon={n.icon} label={t(lang, n.key)} />)}
+        {[nav[3]!, nav[4]!].map((n) => <MobileItem key={n.to} to={n.to} icon={n.icon} label={t(lang, n.key)} />)}
       </nav>
     </div>
   );

@@ -6,7 +6,7 @@ import { AuthCard } from "@/components/AuthCard";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/verify")({
-  validateSearch: (s: Record<string, unknown>) => ({ email: typeof s.email === "string" ? s.email : "" }),
+  validateSearch: (s: Record<string, unknown>) => ({ email: typeof s["email"] === "string" ? (s["email"] as string) : "" }),
   head: () => ({
     meta: [
       { title: "Verify your email — Smart Ledger" },

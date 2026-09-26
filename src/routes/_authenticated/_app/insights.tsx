@@ -27,9 +27,9 @@ function Insights() {
   const cats = byCategory(monthEx);
   const list: Insight[] = [];
 
-  if (monthEx.length) {
+  if (monthEx.length && cats[0]) {
     list.push({ icon: Wallet, tone: "text-primary", text: `Your expenses this month are ${formatMoney(totalEx, cur)} across ${monthEx.length} transactions.` });
-    list.push({ icon: Lightbulb, tone: "text-primary", text: `Your highest spending category this month is ${cats[0].name} (${formatMoney(cats[0].value, cur)}).` });
+    list.push({ icon: Lightbulb, tone: "text-primary", text: `Your highest spending category this month is ${cats[0]!.name} (${formatMoney(cats[0]!.value, cur)}).` });
     cats.slice(0, 3).forEach((c) => list.push({ icon: Lightbulb, tone: "text-muted-foreground", text: `${c.name} represents ${((c.value / totalEx) * 100).toFixed(0)}% of your total expenses.` }));
   }
   if (totalInc > 0) {

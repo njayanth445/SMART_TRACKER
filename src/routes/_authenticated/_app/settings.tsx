@@ -38,10 +38,10 @@ function Settings() {
 
   async function changePassword(e: React.FormEvent) {
     e.preventDefault();
-    if (pw.next.length < 8) return toast.error("New password must be at least 8 characters.");
-    if (pw.next !== pw.confirm) return toast.error("Passwords do not match.");
+    if (pw.next.length < 8) { toast.error("New password must be at least 8 characters."); return; }
+    if (pw.next !== pw.confirm) { toast.error("Passwords do not match."); return; }
     const { error } = await supabase.auth.updateUser({ password: pw.next, current_password: pw.current } as never);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Password changed");
     setPw({ current: "", next: "", confirm: "" });
   }

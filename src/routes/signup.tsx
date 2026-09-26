@@ -29,8 +29,8 @@ function Signup() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (f.password.length < 8) return toast.error("Password must be at least 8 characters.");
-    if (f.password !== f.confirm) return toast.error("Passwords do not match.");
+    if (f.password.length < 8) { toast.error("Password must be at least 8 characters."); return; }
+    if (f.password !== f.confirm) { toast.error("Passwords do not match."); return; }
     setLoading(true);
     const { data, error } = await supabase.auth.signUp({
       email: f.email,
@@ -38,7 +38,7 @@ function Signup() {
       options: { emailRedirectTo: window.location.origin + "/profile-setup", data: { full_name: f.name } },
     });
     setLoading(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     if (data.session) return nav({ to: "/profile-setup" });
     nav({ to: "/verify", search: { email: f.email } });
   }
