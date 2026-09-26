@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -34,12 +34,9 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   // If already signed in (e.g. after Google), go to dashboard
-  useState(() => {
-    if (typeof window !== "undefined") {
-      supabase.auth.getSession().then(({ data }) => { if (data.session) nav({ to: "/dashboard", replace: true }); });
-    }
-    return null;
-  });
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => { if (data.session) nav({ to: "/dashboard", replace: true }); });
+  }, [nav]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
