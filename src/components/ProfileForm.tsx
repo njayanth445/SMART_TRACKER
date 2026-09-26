@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -39,7 +39,9 @@ export function ProfileForm({ profile, onSubmit, submitting, submitLabel }: { pr
     avatar_url: profile?.avatar_url ?? null,
   });
   const [email, setEmail] = useState(profile?.email ?? "");
-  if (!email) supabase.auth.getUser().then(({ data }) => data.user?.email && setEmail(data.user.email));
+  useEffect(() => {
+    if (!email) supabase.auth.getUser().then(({ data }) => { if (data.user?.email) setEmail(data.user.email); });
+  }, [email]);
 
   async function onPhoto(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
