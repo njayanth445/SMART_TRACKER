@@ -14,7 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useProfile, useUpdateProfile } from "@/lib/data";
 import { CURRENCIES, LANGUAGES } from "@/lib/finance";
 import { applyTheme, getStoredTheme } from "@/lib/theme";
-import { useSignOut } from "./route";
+import { useSignOut } from "@/lib/useSignOut";
 
 export const Route = createFileRoute("/_authenticated/_app/settings")({
   head: () => ({ meta: [{ title: "Settings — Smart Ledger" }, { name: "description", content: "Appearance, language, currency and security." }, { property: "og:title", content: "Settings — Smart Ledger" }, { property: "og:description", content: "Appearance, language, currency and security." }] }),

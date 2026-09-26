@@ -1,13 +1,12 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useSignOut } from "@/lib/useSignOut";
 import {
   BarChart3, Bell, FileText, Home, Lightbulb, LogOut, PiggyBank, Plus, Settings, TrendingDown, TrendingUp, User,
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { supabase } from "@/integrations/supabase/client";
 import { useNotifications, useProfile } from "@/lib/data";
 import { t, type TKey } from "@/lib/i18n";
 
@@ -28,16 +27,6 @@ const nav: { to: "/dashboard" | "/expenses" | "/income" | "/budgets" | "/analyti
   { to: "/settings", key: "settings", icon: Settings },
 ];
 
-export function useSignOut() {
-  const qc = useQueryClient();
-  const navigate = useNavigate();
-  return async () => {
-    await qc.cancelQueries();
-    qc.clear();
-    await supabase.auth.signOut();
-    navigate({ to: "/login", replace: true });
-  };
-}
 
 function AppShell() {
   const { data: profile, isSuccess } = useProfile();
