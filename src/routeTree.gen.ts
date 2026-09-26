@@ -16,8 +16,14 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as VerifyRouteImport } from './routes/verify'
+import { Route as AuthenticatedAppRouteRouteImport } from './routes/_authenticated/_app/route'
 import { Route as AuthenticatedProfileSetupRouteImport } from './routes/_authenticated/profile-setup'
 import { Route as AuthenticatedWelcomeRouteImport } from './routes/_authenticated/welcome'
+import { Route as AuthenticatedAppDashboardRouteImport } from './routes/_authenticated/_app/dashboard'
+import { Route as AuthenticatedAppExpensesIndexRouteImport } from './routes/_authenticated/_app/expenses.index'
+import { Route as AuthenticatedAppExpensesAddRouteImport } from './routes/_authenticated/_app/expenses.add'
+import { Route as AuthenticatedAppIncomeIndexRouteImport } from './routes/_authenticated/_app/income.index'
+import { Route as AuthenticatedAppIncomeAddRouteImport } from './routes/_authenticated/_app/income.add'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -53,6 +59,10 @@ const VerifyRoute = VerifyRouteImport.update({
   path: '/verify',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAppRouteRoute = AuthenticatedAppRouteRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedProfileSetupRoute =
   AuthenticatedProfileSetupRouteImport.update({
     id: '/profile-setup',
@@ -64,6 +74,36 @@ const AuthenticatedWelcomeRoute = AuthenticatedWelcomeRouteImport.update({
   path: '/welcome',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAppDashboardRoute =
+  AuthenticatedAppDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => AuthenticatedAppRouteRoute,
+  } as any)
+const AuthenticatedAppExpensesIndexRoute =
+  AuthenticatedAppExpensesIndexRouteImport.update({
+    id: '/expenses/',
+    path: '/expenses/',
+    getParentRoute: () => AuthenticatedAppRouteRoute,
+  } as any)
+const AuthenticatedAppExpensesAddRoute =
+  AuthenticatedAppExpensesAddRouteImport.update({
+    id: '/expenses/add',
+    path: '/expenses/add',
+    getParentRoute: () => AuthenticatedAppRouteRoute,
+  } as any)
+const AuthenticatedAppIncomeIndexRoute =
+  AuthenticatedAppIncomeIndexRouteImport.update({
+    id: '/income/',
+    path: '/income/',
+    getParentRoute: () => AuthenticatedAppRouteRoute,
+  } as any)
+const AuthenticatedAppIncomeAddRoute =
+  AuthenticatedAppIncomeAddRouteImport.update({
+    id: '/income/add',
+    path: '/income/add',
+    getParentRoute: () => AuthenticatedAppRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -74,6 +114,11 @@ export interface FileRoutesByFullPath {
   '/verify': typeof VerifyRoute
   '/profile-setup': typeof AuthenticatedProfileSetupRoute
   '/welcome': typeof AuthenticatedWelcomeRoute
+  '/dashboard': typeof AuthenticatedAppDashboardRoute
+  '/expenses/add': typeof AuthenticatedAppExpensesAddRoute
+  '/income/add': typeof AuthenticatedAppIncomeAddRoute
+  '/expenses/': typeof AuthenticatedAppExpensesIndexRoute
+  '/income/': typeof AuthenticatedAppIncomeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -84,6 +129,11 @@ export interface FileRoutesByTo {
   '/verify': typeof VerifyRoute
   '/profile-setup': typeof AuthenticatedProfileSetupRoute
   '/welcome': typeof AuthenticatedWelcomeRoute
+  '/dashboard': typeof AuthenticatedAppDashboardRoute
+  '/expenses/add': typeof AuthenticatedAppExpensesAddRoute
+  '/income/add': typeof AuthenticatedAppIncomeAddRoute
+  '/expenses': typeof AuthenticatedAppExpensesIndexRoute
+  '/income': typeof AuthenticatedAppIncomeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -94,8 +144,14 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/verify': typeof VerifyRoute
+  '/_authenticated/_app': typeof AuthenticatedAppRouteRouteWithChildren
   '/_authenticated/profile-setup': typeof AuthenticatedProfileSetupRoute
   '/_authenticated/welcome': typeof AuthenticatedWelcomeRoute
+  '/_authenticated/_app/dashboard': typeof AuthenticatedAppDashboardRoute
+  '/_authenticated/_app/expenses/add': typeof AuthenticatedAppExpensesAddRoute
+  '/_authenticated/_app/income/add': typeof AuthenticatedAppIncomeAddRoute
+  '/_authenticated/_app/expenses/': typeof AuthenticatedAppExpensesIndexRoute
+  '/_authenticated/_app/income/': typeof AuthenticatedAppIncomeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -108,6 +164,11 @@ export interface FileRouteTypes {
     | '/verify'
     | '/profile-setup'
     | '/welcome'
+    | '/dashboard'
+    | '/expenses/add'
+    | '/income/add'
+    | '/expenses/'
+    | '/income/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -118,6 +179,11 @@ export interface FileRouteTypes {
     | '/verify'
     | '/profile-setup'
     | '/welcome'
+    | '/dashboard'
+    | '/expenses/add'
+    | '/income/add'
+    | '/expenses'
+    | '/income'
   id:
     | '__root__'
     | '/'
@@ -127,8 +193,14 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/verify'
+    | '/_authenticated/_app'
     | '/_authenticated/profile-setup'
     | '/_authenticated/welcome'
+    | '/_authenticated/_app/dashboard'
+    | '/_authenticated/_app/expenses/add'
+    | '/_authenticated/_app/income/add'
+    | '/_authenticated/_app/expenses/'
+    | '/_authenticated/_app/income/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -192,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VerifyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/_app': {
+      id: '/_authenticated/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedAppRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/profile-setup': {
       id: '/_authenticated/profile-setup'
       path: '/profile-setup'
@@ -206,15 +285,73 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedWelcomeRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/_app/dashboard': {
+      id: '/_authenticated/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedAppDashboardRouteImport
+      parentRoute: typeof AuthenticatedAppRouteRoute
+    }
+    '/_authenticated/_app/expenses/': {
+      id: '/_authenticated/_app/expenses/'
+      path: '/expenses'
+      fullPath: '/expenses/'
+      preLoaderRoute: typeof AuthenticatedAppExpensesIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRouteRoute
+    }
+    '/_authenticated/_app/expenses/add': {
+      id: '/_authenticated/_app/expenses/add'
+      path: '/expenses/add'
+      fullPath: '/expenses/add'
+      preLoaderRoute: typeof AuthenticatedAppExpensesAddRouteImport
+      parentRoute: typeof AuthenticatedAppRouteRoute
+    }
+    '/_authenticated/_app/income/': {
+      id: '/_authenticated/_app/income/'
+      path: '/income'
+      fullPath: '/income/'
+      preLoaderRoute: typeof AuthenticatedAppIncomeIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRouteRoute
+    }
+    '/_authenticated/_app/income/add': {
+      id: '/_authenticated/_app/income/add'
+      path: '/income/add'
+      fullPath: '/income/add'
+      preLoaderRoute: typeof AuthenticatedAppIncomeAddRouteImport
+      parentRoute: typeof AuthenticatedAppRouteRoute
+    }
   }
 }
 
+interface AuthenticatedAppRouteRouteChildren {
+  AuthenticatedAppDashboardRoute: typeof AuthenticatedAppDashboardRoute
+  AuthenticatedAppExpensesAddRoute: typeof AuthenticatedAppExpensesAddRoute
+  AuthenticatedAppIncomeAddRoute: typeof AuthenticatedAppIncomeAddRoute
+  AuthenticatedAppExpensesIndexRoute: typeof AuthenticatedAppExpensesIndexRoute
+  AuthenticatedAppIncomeIndexRoute: typeof AuthenticatedAppIncomeIndexRoute
+}
+
+const AuthenticatedAppRouteRouteChildren: AuthenticatedAppRouteRouteChildren = {
+  AuthenticatedAppDashboardRoute: AuthenticatedAppDashboardRoute,
+  AuthenticatedAppExpensesAddRoute: AuthenticatedAppExpensesAddRoute,
+  AuthenticatedAppIncomeAddRoute: AuthenticatedAppIncomeAddRoute,
+  AuthenticatedAppExpensesIndexRoute: AuthenticatedAppExpensesIndexRoute,
+  AuthenticatedAppIncomeIndexRoute: AuthenticatedAppIncomeIndexRoute,
+}
+
+const AuthenticatedAppRouteRouteWithChildren =
+  AuthenticatedAppRouteRoute._addFileChildren(
+    AuthenticatedAppRouteRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAppRouteRoute: typeof AuthenticatedAppRouteRouteWithChildren
   AuthenticatedProfileSetupRoute: typeof AuthenticatedProfileSetupRoute
   AuthenticatedWelcomeRoute: typeof AuthenticatedWelcomeRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAppRouteRoute: AuthenticatedAppRouteRouteWithChildren,
   AuthenticatedProfileSetupRoute: AuthenticatedProfileSetupRoute,
   AuthenticatedWelcomeRoute: AuthenticatedWelcomeRoute,
 }
