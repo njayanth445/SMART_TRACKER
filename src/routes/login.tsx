@@ -22,8 +22,10 @@ export const Route = createFileRoute("/login")({
 });
 
 export async function googleSignIn() {
-  const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/login" });
-  if (r.error) toast.error("Google sign-in failed. Please try again.");
+  const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+  if (r.error) { toast.error("Google sign-in failed. Please try again."); return; }
+  if (r.redirected) return;
+  window.location.assign("/dashboard");
 }
 
 function Login() {
