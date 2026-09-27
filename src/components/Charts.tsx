@@ -54,3 +54,38 @@ export function TrendArea({ data, dataKey, currency, xKey = "month" }: { data: R
     </ResponsiveContainer>
   );
 }
+
+/** Horizontal ranked bars — Power BI style "top drivers" visual. */
+export function RankedBars({ data, currency }: { data: { name: string; value: number }[]; currency: string }) {
+  const height = Math.max(180, data.length * 38);
+  return (
+    <ResponsiveContainer width="100%" height={height}>
+      <BarChart data={data} layout="vertical" margin={{ left: 8, right: 16 }}>
+        <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" horizontal={false} />
+        <XAxis type="number" tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} tickFormatter={(v) => (v >= 1000 ? `${Math.round(v / 1000)}k` : v)} />
+        <YAxis type="category" dataKey="name" width={104} tick={{ fontSize: 12, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
+        <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => formatMoney(v, currency)} cursor={{ fill: "var(--muted)" }} />
+        <Bar dataKey="value" name="Spent" radius={[0, 6, 6, 0]}>
+          {data.map((_, i) => <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />)}
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
+  );
+}
+
+/** Cumulative spend vs an even-pace target line. */
+export function PacingLines({ data, currency }: { data: { day: string; actual: number; target: number }[]; currency: string }) {
+  return (
+    <ResponsiveContainer width="100%" height={260}>
+      <LineChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+        <XAxis dataKey="day" tick={{ fontSize: 12, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
+        <YAxis tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} width={50} tickFormatter={(v) => (v >= 1000 ? `${Math.round(v / 1000)}k` : v)} />
+        <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => formatMoney(v, currency)} />
+        <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
+        <Line type="monotone" dataKey="actual" name="Cumulative spend" stroke="var(--expense)" strokeWidth={2.5} dot={false} />
+        <Line type="monotone" dataKey="target" name="Even pace" stroke="var(--muted-foreground)" strokeWidth={2} strokeDasharray="5 4" dot={false} />
+      </LineChart>
+    </ResponsiveContainer>
+  );
+}
