@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CURRENCIES, LANGUAGES } from "@/lib/finance";
 import { supabase } from "@/integrations/supabase/client";
 import type { Profile } from "@/lib/data";
+import { normalizeIndianPhone } from "@/lib/sms";
 
 export type ProfileFormValues = { full_name: string; phone: string; monthly_income: number | null; currency: string; language: string; avatar_url: string | null };
 
@@ -53,9 +54,14 @@ export function ProfileForm({ profile, onSubmit, submitting, submitLabel }: { pr
   function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!v.full_name.trim()) { toast.error("Please enter your name."); return; }
-    if (v.phone && !/^[+\d\s-]{7,15}$/.test(v.phone)) { toast.error("Please enter a valid phone number."); return; }
+    let phone = v.phone.trim();
+    if (phone) {
+      const n = normalizeIndianPhone(phone);
+      if (!n) { toast.error("Enter a valid 10-digit Indian mobile number (starts with 6, 7, 8 or 9)."); return; }
+      phone = n;
+    }
     if (v.monthly_income != null && v.monthly_income < 0) { toast.error("Income can't be negative."); return; }
-    onSubmit(v);
+    onSubmit({ ...v, full_name: v.full_name.trim().slice(0, 100), phone });
   }
 
   return (
@@ -72,7 +78,7 @@ export function ProfileForm({ profile, onSubmit, submitting, submitLabel }: { pr
       <div className="space-y-1.5"><Label htmlFor="fn">Full name</Label><Input id="fn" value={v.full_name} onChange={(e) => setV({ ...v, full_name: e.target.value })} /></div>
       <div className="space-y-1.5"><Label htmlFor="em">Email</Label><Input id="em" value={email} disabled /></div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <div className="space-y-1.5"><Label htmlFor="ph">Phone</Label><Input id="ph" value={v.phone} onChange={(e) => setV({ ...v, phone: e.target.value })} placeholder="+91 98765 43210" /></div>
+        <div className="space-y-1.5"><Label htmlFor="ph">Mobile number</Label><Input id="ph" type="tel" inputMode="tel" maxLength={16} value={v.phone} onChange={(e) => setV({ ...v, phone: e.target.value.replace(/[^\d+\s-]/g, "") })} placeholder="+91 98765 43210" /><p className="text-xs text-muted-foreground">Indian mobile, 10 digits.</p></div>
         <div className="space-y-1.5"><Label htmlFor="mi">Monthly income</Label><Input id="mi" type="number" min={0} value={v.monthly_income ?? ""} onChange={(e) => setV({ ...v, monthly_income: e.target.value === "" ? null : Number(e.target.value) })} /></div>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
