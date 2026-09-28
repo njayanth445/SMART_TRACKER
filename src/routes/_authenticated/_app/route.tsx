@@ -2,7 +2,7 @@ import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-rout
 import { useEffect } from "react";
 import { useSignOut } from "@/lib/useSignOut";
 import {
-  BarChart3, Bell, FileText, Home, Lightbulb, LogOut, PiggyBank, Plus, Settings, TrendingDown, TrendingUp, User,
+  BarChart3, Bell, FileText, Home, Lightbulb, LogOut, MessageSquareText, PiggyBank, Plus, Settings, TrendingDown, TrendingUp, User,
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,10 +14,11 @@ export const Route = createFileRoute("/_authenticated/_app")({
   component: AppShell,
 });
 
-const nav: { to: "/dashboard" | "/expenses" | "/income" | "/budgets" | "/analytics" | "/insights" | "/reports" | "/notifications" | "/profile" | "/settings"; key: TKey; icon: typeof Home }[] = [
+const nav: { to: "/dashboard" | "/expenses" | "/income" | "/sms-import" | "/budgets" | "/analytics" | "/insights" | "/reports" | "/notifications" | "/profile" | "/settings"; key: TKey; icon: typeof Home }[] = [
   { to: "/dashboard", key: "dashboard", icon: Home },
   { to: "/expenses", key: "expenses", icon: TrendingDown },
   { to: "/income", key: "income", icon: TrendingUp },
+  { to: "/sms-import", key: "sms", icon: MessageSquareText },
   { to: "/budgets", key: "budgets", icon: PiggyBank },
   { to: "/analytics", key: "analytics", icon: BarChart3 },
   { to: "/insights", key: "insights", icon: Lightbulb },
@@ -83,6 +84,7 @@ function AppShell() {
                 <DropdownMenuItem asChild><Link to="/settings">{t(lang, "settings")}</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild className="lg:hidden"><Link to="/insights">{t(lang, "insights")}</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild className="lg:hidden"><Link to="/reports">{t(lang, "reports")}</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild className="lg:hidden"><Link to="/sms-import">{t(lang, "sms")}</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild className="lg:hidden"><Link to="/income">{t(lang, "income")}</Link></DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={signOut}><LogOut className="mr-2 h-4 w-4" />{t(lang, "logout")}</DropdownMenuItem>

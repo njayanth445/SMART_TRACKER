@@ -27,6 +27,7 @@ import { Route as AuthenticatedAppNotificationsRouteImport } from './routes/_aut
 import { Route as AuthenticatedAppProfileRouteImport } from './routes/_authenticated/_app/profile'
 import { Route as AuthenticatedAppReportsRouteImport } from './routes/_authenticated/_app/reports'
 import { Route as AuthenticatedAppSettingsRouteImport } from './routes/_authenticated/_app/settings'
+import { Route as AuthenticatedAppSmsImportRouteImport } from './routes/_authenticated/_app/sms-import'
 import { Route as AuthenticatedAppExpensesIndexRouteImport } from './routes/_authenticated/_app/expenses.index'
 import { Route as AuthenticatedAppExpensesAddRouteImport } from './routes/_authenticated/_app/expenses.add'
 import { Route as AuthenticatedAppIncomeIndexRouteImport } from './routes/_authenticated/_app/income.index'
@@ -126,6 +127,12 @@ const AuthenticatedAppSettingsRoute =
     path: '/settings',
     getParentRoute: () => AuthenticatedAppRouteRoute,
   } as any)
+const AuthenticatedAppSmsImportRoute =
+  AuthenticatedAppSmsImportRouteImport.update({
+    id: '/sms-import',
+    path: '/sms-import',
+    getParentRoute: () => AuthenticatedAppRouteRoute,
+  } as any)
 const AuthenticatedAppExpensesIndexRoute =
   AuthenticatedAppExpensesIndexRouteImport.update({
     id: '/expenses/',
@@ -168,6 +175,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedAppProfileRoute
   '/reports': typeof AuthenticatedAppReportsRoute
   '/settings': typeof AuthenticatedAppSettingsRoute
+  '/sms-import': typeof AuthenticatedAppSmsImportRoute
   '/expenses/add': typeof AuthenticatedAppExpensesAddRoute
   '/income/add': typeof AuthenticatedAppIncomeAddRoute
   '/expenses/': typeof AuthenticatedAppExpensesIndexRoute
@@ -190,6 +198,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedAppProfileRoute
   '/reports': typeof AuthenticatedAppReportsRoute
   '/settings': typeof AuthenticatedAppSettingsRoute
+  '/sms-import': typeof AuthenticatedAppSmsImportRoute
   '/expenses/add': typeof AuthenticatedAppExpensesAddRoute
   '/income/add': typeof AuthenticatedAppIncomeAddRoute
   '/expenses': typeof AuthenticatedAppExpensesIndexRoute
@@ -215,6 +224,7 @@ export interface FileRoutesById {
   '/_authenticated/_app/profile': typeof AuthenticatedAppProfileRoute
   '/_authenticated/_app/reports': typeof AuthenticatedAppReportsRoute
   '/_authenticated/_app/settings': typeof AuthenticatedAppSettingsRoute
+  '/_authenticated/_app/sms-import': typeof AuthenticatedAppSmsImportRoute
   '/_authenticated/_app/expenses/add': typeof AuthenticatedAppExpensesAddRoute
   '/_authenticated/_app/income/add': typeof AuthenticatedAppIncomeAddRoute
   '/_authenticated/_app/expenses/': typeof AuthenticatedAppExpensesIndexRoute
@@ -239,6 +249,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/sms-import'
     | '/expenses/add'
     | '/income/add'
     | '/expenses/'
@@ -261,6 +272,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/sms-import'
     | '/expenses/add'
     | '/income/add'
     | '/expenses'
@@ -285,6 +297,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_app/profile'
     | '/_authenticated/_app/reports'
     | '/_authenticated/_app/settings'
+    | '/_authenticated/_app/sms-import'
     | '/_authenticated/_app/expenses/add'
     | '/_authenticated/_app/income/add'
     | '/_authenticated/_app/expenses/'
@@ -429,6 +442,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppSettingsRouteImport
       parentRoute: typeof AuthenticatedAppRouteRoute
     }
+    '/_authenticated/_app/sms-import': {
+      id: '/_authenticated/_app/sms-import'
+      path: '/sms-import'
+      fullPath: '/sms-import'
+      preLoaderRoute: typeof AuthenticatedAppSmsImportRouteImport
+      parentRoute: typeof AuthenticatedAppRouteRoute
+    }
     '/_authenticated/_app/expenses/': {
       id: '/_authenticated/_app/expenses/'
       path: '/expenses'
@@ -469,6 +489,7 @@ interface AuthenticatedAppRouteRouteChildren {
   AuthenticatedAppProfileRoute: typeof AuthenticatedAppProfileRoute
   AuthenticatedAppReportsRoute: typeof AuthenticatedAppReportsRoute
   AuthenticatedAppSettingsRoute: typeof AuthenticatedAppSettingsRoute
+  AuthenticatedAppSmsImportRoute: typeof AuthenticatedAppSmsImportRoute
   AuthenticatedAppExpensesAddRoute: typeof AuthenticatedAppExpensesAddRoute
   AuthenticatedAppIncomeAddRoute: typeof AuthenticatedAppIncomeAddRoute
   AuthenticatedAppExpensesIndexRoute: typeof AuthenticatedAppExpensesIndexRoute
@@ -484,6 +505,7 @@ const AuthenticatedAppRouteRouteChildren: AuthenticatedAppRouteRouteChildren = {
   AuthenticatedAppProfileRoute: AuthenticatedAppProfileRoute,
   AuthenticatedAppReportsRoute: AuthenticatedAppReportsRoute,
   AuthenticatedAppSettingsRoute: AuthenticatedAppSettingsRoute,
+  AuthenticatedAppSmsImportRoute: AuthenticatedAppSmsImportRoute,
   AuthenticatedAppExpensesAddRoute: AuthenticatedAppExpensesAddRoute,
   AuthenticatedAppIncomeAddRoute: AuthenticatedAppIncomeAddRoute,
   AuthenticatedAppExpensesIndexRoute: AuthenticatedAppExpensesIndexRoute,

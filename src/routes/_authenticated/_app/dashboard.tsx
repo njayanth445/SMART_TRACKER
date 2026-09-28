@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PiggyBank, Percent, Plus, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EmptyState, LoadingBlock, PageHeader, Panel, ProgressBar, StatCard } from "@/components/ui-bits";
-import { CategoryPie, IncomeExpenseBars, TrendArea } from "@/components/Charts";
+import { CategoryPie, Gauge, IncomeExpenseBars, SimpleBars, TrendArea } from "@/components/Charts";
 import { TxList, type TxRow } from "@/components/TxList";
 import { useBudgets, useCurrency, useExpenses, useIncome, useProfile } from "@/lib/data";
 import { budgetStatus, byCategory, formatMoney, inMonth, monthlySeries, savingsRate, sum } from "@/lib/finance";
@@ -36,6 +36,14 @@ function Dashboard() {
     ...(inc.data ?? []).map((r) => ({ id: r.id, kind: "income" as const, title: r.description || r.source, sub: r.source, amount: r.amount, date: r.date, c: r.created_at })),
   ].sort((a, b) => (b.date + b.c).localeCompare(a.date + a.c)).slice(0, 6);
 
+  const budgetTotal = sum(budgets);
+  const budgetSpent = sum(monthEx.filter((e) => budgets.some((b) => b.category === e.category)));
+  const daysIn = new Date(y, m, 0).getDate();
+  const daily = Array.from({ length: now.getDate() }, (_, i) => {
+    const d = `${y}-${String(m).padStart(2, "0")}-${String(i + 1).padStart(2, "0")}`;
+    return { x: String(i + 1), value: sum(monthEx.filter((e) => e.date === d)) };
+  });
+  const projected = now.getDate() ? (totalEx / now.getDate()) * daysIn : 0;
   const loading = ex.isLoading || inc.isLoading;
   const monthName = now.toLocaleDateString(undefined, { month: "long", year: "numeric" });
 
@@ -56,6 +64,16 @@ function Dashboard() {
         <StatCard label="Net savings" value={formatMoney(net, cur)} icon={Wallet} tone="primary" />
         <StatCard label="Savings rate" value={`${rate.toFixed(1)}%`} icon={Percent} tone="accent" hint={totalInc ? undefined : "Add income to calculate"} />
       </div>
+
+      <div className="grid gap-4 md:grid-cols-3">
+        <Panel title="Savings rate"><Gauge pct={Math.max(0, rate)} label="of income saved" sub={totalInc ? formatMoney(net, cur) + " saved" : "Add income to calculate"} /></Panel>
+        <Panel title="Budget used"><Gauge pct={budgetTotal ? (budgetSpent / budgetTotal) * 100 : 0} label={budgetTotal ? `${formatMoney(budgetSpent, cur)} of ${formatMoney(budgetTotal, cur)}` : "No budgets set"} /></Panel>
+        <Panel title="Month progress"><Gauge pct={(now.getDate() / daysIn) * 100} label={`Day ${now.getDate()} of ${daysIn}`} sub={`Projected spend ${formatMoney(projected, cur)}`} /></Panel>
+      </div>
+
+      <Panel title="Daily spending this month">
+        {loading ? <LoadingBlock /> : <SimpleBars data={daily} currency={cur} />}
+      </Panel>
 
       <div className="grid gap-4 lg:grid-cols-5">
         <Panel title="Expense by category" className="lg:col-span-2">
