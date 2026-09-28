@@ -13,9 +13,8 @@ import { parseMany, type ParsedSms } from "@/lib/sms";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/_app/sms-import")({
-  validateSearch: (s: Record<string, unknown>) => ({
-    text: typeof s["text"] === "string" ? (s["text"] as string).slice(0, 5000) : "",
-  }),
+  validateSearch: (s: Record<string, unknown>): { text?: string } =>
+    typeof s["text"] === "string" ? { text: (s["text"] as string).slice(0, 5000) } : {},
   head: () => ({ meta: [{ title: "Add from bank SMS — Smart Ledger" }, { name: "description", content: "Turn bank SMS like 'Rs 500 credited' into income and expenses." }, { property: "og:title", content: "Add from bank SMS — Smart Ledger" }, { property: "og:description", content: "Turn bank SMS into income and expenses." }] }),
   component: SmsImport,
 });
@@ -23,7 +22,7 @@ export const Route = createFileRoute("/_authenticated/_app/sms-import")({
 type Row = ParsedSms & { keep: boolean };
 
 function SmsImport() {
-  const { text: shared } = Route.useSearch();
+  const { text: shared = "" } = Route.useSearch();
   const nav = useNavigate();
   const cur = useCurrency();
   const [text, setText] = useState(shared);
