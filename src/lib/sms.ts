@@ -44,7 +44,7 @@ function parseDate(s: string): string {
 }
 
 function party(s: string): string {
-  const all = [...s.matchAll(/\b(?:to|at|from|by|towards)\s+(?:VPA\s+)?([A-Za-z0-9@._& -]{2,40}?)(?=\s+(?:on|ref|via|using|upi|avl|a\/c|bal)\b|\.|$)/gi)]
+  const all = [...s.matchAll(/\b(?:to|at|from|by|towards)\s+(?:VPA\s+)?([A-Za-z0-9@._& -]{2,40}?)(?=\s+(?:on|ref|via|using|upi|avl|a\/c|bal|from|by|to|at)\b|\.|$)/gi)]
     .map((x) => x[1]!.trim()).filter((p) => !/^(your|you|a\/c|ac|account|upi|imps|neft)\b/i.test(p));
   if (all.length) return all[all.length - 1]!;
   const m = s.match(/\b(?:to|at|from|by|towards)\s+(?:VPA\s+)?([A-Za-z0-9@._& -]{2,40}?)(?=\s+(?:on|ref|via|using|upi|avl|a\/c|bal|\.|$))/i);
