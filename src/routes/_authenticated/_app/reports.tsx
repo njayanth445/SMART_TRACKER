@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { LoadingBlock, PageHeader, Panel } from "@/components/ui-bits";
+import { CategoryPie, IncomeExpenseBars, SimpleBars } from "@/components/Charts";
 import { useCurrency, useExpenses, useIncome, useProfile } from "@/lib/data";
 import { MONTHS, byCategory, downloadFile, formatMoney, savingsRate, sum, toCSV, todayISO } from "@/lib/finance";
 
@@ -82,6 +83,15 @@ function Reports() {
               {[["Income", formatMoney(totalInc, cur), "text-income"], ["Expense", formatMoney(totalEx, cur), "text-expense"], ["Net savings", formatMoney(totalInc - totalEx, cur), ""], ["Savings rate", `${savingsRate(totalInc, totalEx).toFixed(1)}%`, ""]].map(([l, v, c]) => (
                 <div key={l} className="rounded-2xl border border-border bg-background/50 p-3"><p className="text-xs text-muted-foreground">{l}</p><p className={`mt-1 font-display text-lg font-semibold ${c}`}>{v}</p></div>
               ))}
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 print:break-inside-avoid">
+              <div className="rounded-2xl border border-border p-3"><h3 className="mb-1 text-sm font-semibold">Where the money went</h3>{cats.length ? <CategoryPie data={cats} currency={cur} /> : <p className="py-16 text-center text-sm text-muted-foreground">No expenses</p>}</div>
+              <div className="rounded-2xl border border-border p-3"><h3 className="mb-1 text-sm font-semibold">{type === "yearly" ? "Income vs expense by month" : type === "monthly" ? "Daily spending" : "Spending by category"}</h3>
+                {type === "yearly" ? <IncomeExpenseBars data={byMonth.map((r) => ({ month: r.mn, income: r.n, expense: r.e }))} currency={cur} />
+                  : type === "monthly" ? <SimpleBars currency={cur} data={Array.from({ length: new Date(year, month, 0).getDate() }, (_, i) => { const d = `${prefix}-${String(i + 1).padStart(2, "0")}`; return { x: String(i + 1), value: sum(exRows.filter((r) => r.date === d)) }; })} />
+                  : <SimpleBars currency={cur} data={cats.map((c) => ({ x: c.name, value: c.value }))} />}
+              </div>
             </div>
 
             {type === "yearly" && (

@@ -10,6 +10,7 @@ import { EmptyState, LoadingBlock, PageHeader, Panel, ProgressBar, StatCard } fr
 import { useBudgets, useCurrency, useDeleteRow, useExpenses, useSaveBudget } from "@/lib/data";
 import { EXPENSE_CATEGORIES, MONTHS, budgetStatus, formatMoney, inMonth, sum } from "@/lib/finance";
 import { cn } from "@/lib/utils";
+import { BudgetVsSpent, Gauge } from "@/components/Charts";
 
 export const Route = createFileRoute("/_authenticated/_app/budgets")({
   head: () => ({ meta: [{ title: "Budgets — Smart Ledger" }, { name: "description", content: "Set and track monthly category budgets." }, { property: "og:title", content: "Budgets — Smart Ledger" }, { property: "og:description", content: "Set and track monthly category budgets." }] }),
@@ -60,6 +61,15 @@ function Budgets() {
         <StatCard label="Spent" value={formatMoney(totalSpent, cur)} icon={PiggyBank} tone="expense" />
         <StatCard label="Remaining" value={formatMoney(totalBudget - totalSpent, cur)} icon={PiggyBank} tone="income" />
       </div>
+
+      {list.length > 0 && (
+        <div className="grid gap-4 lg:grid-cols-3">
+          <Panel title="Overall usage"><Gauge pct={totalBudget ? (totalSpent / totalBudget) * 100 : 0} label={`${formatMoney(totalSpent, cur)} of ${formatMoney(totalBudget, cur)}`} /></Panel>
+          <Panel title="Budget vs spent" className="lg:col-span-2">
+            <BudgetVsSpent currency={cur} data={list.map((b) => ({ name: b.category, budget: b.amount, spent: sum(monthEx.filter((e) => e.category === b.category)) }))} />
+          </Panel>
+        </div>
+      )}
 
       <Panel title="Set a category budget">
         <form onSubmit={add} className="grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end">

@@ -84,6 +84,7 @@ function AppShell() {
                 <DropdownMenuItem asChild><Link to="/settings">{t(lang, "settings")}</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild className="lg:hidden"><Link to="/insights">{t(lang, "insights")}</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild className="lg:hidden"><Link to="/reports">{t(lang, "reports")}</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild className="lg:hidden"><Link to="/sms-import">{t(lang, "sms")}</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild className="lg:hidden"><Link to="/income">{t(lang, "income")}</Link></DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={signOut}><LogOut className="mr-2 h-4 w-4" />{t(lang, "logout")}</DropdownMenuItem>

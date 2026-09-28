@@ -1,4 +1,4 @@
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart, PolarAngleAxis, RadialBar, RadialBarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { formatMoney } from "@/lib/finance";
 
 export const CHART_COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)", "var(--primary-glow)", "var(--warning)", "var(--muted-foreground)", "var(--accent)"];
@@ -86,6 +86,61 @@ export function PacingLines({ data, currency }: { data: { day: string; actual: n
         <Line type="monotone" dataKey="actual" name="Cumulative spend" stroke="var(--expense)" strokeWidth={2.5} dot={false} />
         <Line type="monotone" dataKey="target" name="Even pace" stroke="var(--muted-foreground)" strokeWidth={2} strokeDasharray="5 4" dot={false} />
       </LineChart>
+    </ResponsiveContainer>
+  );
+}
+
+/** Semi-circle gauge (0-100+%). */
+export function Gauge({ pct, label, sub }: { pct: number; label: string; sub?: string }) {
+  const v = Math.max(0, Math.min(100, pct));
+  const color = pct > 100 ? "var(--destructive)" : pct >= 80 ? "var(--warning)" : "var(--income)";
+  return (
+    <div className="relative">
+      <ResponsiveContainer width="100%" height={170}>
+        <RadialBarChart data={[{ v }]} startAngle={180} endAngle={0} innerRadius="75%" outerRadius="100%" cy="85%">
+          <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
+          <RadialBar dataKey="v" cornerRadius={10} fill={color} background={{ fill: "var(--muted)" }} />
+        </RadialBarChart>
+      </ResponsiveContainer>
+      <div className="pointer-events-none absolute inset-x-0 bottom-3 text-center">
+        <p className="font-display text-2xl font-semibold">{Math.round(pct)}%</p>
+        <p className="text-xs text-muted-foreground">{label}</p>
+        {sub && <p className="text-xs text-muted-foreground">{sub}</p>}
+      </div>
+    </div>
+  );
+}
+
+/** Budget vs spent per category (horizontal grouped bars). */
+export function BudgetVsSpent({ data, currency }: { data: { name: string; budget: number; spent: number }[]; currency: string }) {
+  return (
+    <ResponsiveContainer width="100%" height={Math.max(200, data.length * 52)}>
+      <BarChart data={data} layout="vertical" margin={{ left: 8, right: 16 }}>
+        <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" horizontal={false} />
+        <XAxis type="number" tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} tickFormatter={(v) => (v >= 1000 ? `${Math.round(v / 1000)}k` : v)} />
+        <YAxis type="category" dataKey="name" width={96} tick={{ fontSize: 12, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} />
+        <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => formatMoney(v, currency)} cursor={{ fill: "var(--muted)" }} />
+        <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
+        <Bar dataKey="budget" name="Budget" fill="var(--muted-foreground)" fillOpacity={0.35} radius={[0, 6, 6, 0]} />
+        <Bar dataKey="spent" name="Spent" radius={[0, 6, 6, 0]}>
+          {data.map((d, i) => <Cell key={i} fill={d.spent > d.budget ? "var(--destructive)" : d.spent >= d.budget * 0.8 ? "var(--warning)" : "var(--income)"} />)}
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
+  );
+}
+
+/** Simple vertical bars keyed by `x`. */
+export function SimpleBars({ data, currency, color = "var(--expense)" }: { data: { x: string; value: number }[]; currency: string; color?: string }) {
+  return (
+    <ResponsiveContainer width="100%" height={220}>
+      <BarChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+        <XAxis dataKey="x" tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} interval="preserveStartEnd" />
+        <YAxis tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} axisLine={false} tickLine={false} width={46} tickFormatter={(v) => (v >= 1000 ? `${Math.round(v / 1000)}k` : v)} />
+        <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => formatMoney(v, currency)} cursor={{ fill: "var(--muted)" }} />
+        <Bar dataKey="value" name="Amount" fill={color} radius={[4, 4, 0, 0]} />
+      </BarChart>
     </ResponsiveContainer>
   );
 }
