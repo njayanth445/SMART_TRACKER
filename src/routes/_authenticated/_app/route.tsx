@@ -1,3 +1,4 @@
+import { appLocale } from "@/lib/i18n";
 import { setStoredLang } from "@/components/AutoTranslate";
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -66,7 +67,7 @@ function AppShell() {
           <div className="min-w-0">
             <div className="lg:hidden"><Logo to="/dashboard" /></div>
             <p className="hidden truncate text-sm text-muted-foreground lg:block">
-              {t(lang, "greeting")}, <span className="font-medium text-foreground">{profile?.full_name?.split(" ")[0] ?? "there"}</span> · {new Date().toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" })}
+              {t(lang, "greeting")}, <span className="font-medium text-foreground">{profile?.full_name?.split(" ")[0] ?? "there"}</span> · {new Date().toLocaleDateString(appLocale(), { weekday: "long", day: "numeric", month: "long" })}
             </p>
           </div>
           <div className="flex shrink-0 items-center gap-2">

@@ -1,3 +1,4 @@
+import { appLocale } from "@/lib/i18n";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { FileDown, Printer } from "lucide-react";
@@ -28,7 +29,7 @@ function Reports() {
   const [year, setYear] = useState(now.getFullYear());
 
   const prefix = type === "daily" ? day : type === "monthly" ? `${year}-${String(month).padStart(2, "0")}` : String(year);
-  const label = type === "daily" ? new Date(day + "T00:00").toLocaleDateString(undefined, { dateStyle: "long" }) : type === "monthly" ? `${MONTHS[month - 1]} ${year}` : String(year);
+  const label = type === "daily" ? new Date(day + "T00:00").toLocaleDateString(appLocale(), { dateStyle: "long" }) : type === "monthly" ? `${MONTHS[month - 1]} ${year}` : String(year);
 
   const exRows = useMemo(() => (ex.data ?? []).filter((r) => r.date.startsWith(prefix)), [ex.data, prefix]);
   const incRows = useMemo(() => (inc.data ?? []).filter((r) => r.date.startsWith(prefix)), [inc.data, prefix]);

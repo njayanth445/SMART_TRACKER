@@ -1,3 +1,4 @@
+import { appLocale } from "@/lib/i18n";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PiggyBank, Percent, Plus, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -45,7 +46,7 @@ function Dashboard() {
   });
   const projected = now.getDate() ? (totalEx / now.getDate()) * daysIn : 0;
   const loading = ex.isLoading || inc.isLoading;
-  const monthName = now.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+  const monthName = now.toLocaleDateString(appLocale(), { month: "long", year: "numeric" });
 
   return (
     <div className="space-y-6">

@@ -1,3 +1,4 @@
+import { appLocale } from "@/lib/i18n";
 import { Pencil, Trash2 } from "lucide-react";
 import { formatMoney } from "@/lib/finance";
 import { cn } from "@/lib/utils";
@@ -14,7 +15,7 @@ export function TxList({ rows, currency, onEdit, onDelete }: { rows: TxRow[]; cu
           </span>
           <div className="min-w-0">
             <p className="truncate font-medium">{r.title}</p>
-            <p className="truncate text-xs text-muted-foreground">{r.sub} · {new Date(r.date + "T00:00").toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" })}</p>
+            <p className="truncate text-xs text-muted-foreground">{r.sub} · {new Date(r.date + "T00:00").toLocaleDateString(appLocale(), { day: "numeric", month: "short", year: "numeric" })}</p>
           </div>
           <div className="flex items-center gap-1">
             <span className={cn("font-display font-semibold", r.kind === "income" ? "text-income" : "text-expense")}>
