@@ -1,3 +1,4 @@
+import { setStoredLang } from "@/components/AutoTranslate";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -33,7 +34,7 @@ function resizeToDataUrl(file: File): Promise<string> {
 export function ProfileForm({ profile, onSubmit, submitting, submitLabel }: { profile: Profile | null; onSubmit: (v: ProfileFormValues) => void; submitting: boolean; submitLabel: string }) {
   const [v, setV] = useState<ProfileFormValues>({
     full_name: profile?.full_name ?? "",
-    phone: profile?.phone ?? "",
+    phone: (profile?.phone ?? "").replace(/\D/g, "").slice(-10),
     monthly_income: profile?.monthly_income ?? null,
     currency: profile?.currency ?? "INR",
     language: profile?.language ?? "en",
@@ -56,11 +57,12 @@ export function ProfileForm({ profile, onSubmit, submitting, submitLabel }: { pr
     if (!v.full_name.trim()) { toast.error("Please enter your name."); return; }
     let phone = v.phone.trim();
     if (phone) {
-      const n = normalizeIndianPhone(phone);
+      const n = /^[6-9]\d{9}$/.test(phone) ? normalizeIndianPhone(phone) : null;
       if (!n) { toast.error("Enter a valid 10-digit Indian mobile number (starts with 6, 7, 8 or 9)."); return; }
       phone = n;
     }
     if (v.monthly_income != null && v.monthly_income < 0) { toast.error("Income can't be negative."); return; }
+    setStoredLang(v.language);
     onSubmit({ ...v, full_name: v.full_name.trim().slice(0, 100), phone });
   }
 
@@ -78,7 +80,7 @@ export function ProfileForm({ profile, onSubmit, submitting, submitLabel }: { pr
       <div className="space-y-1.5"><Label htmlFor="fn">Full name</Label><Input id="fn" value={v.full_name} onChange={(e) => setV({ ...v, full_name: e.target.value })} /></div>
       <div className="space-y-1.5"><Label htmlFor="em">Email</Label><Input id="em" value={email} disabled /></div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <div className="space-y-1.5"><Label htmlFor="ph">Mobile number</Label><Input id="ph" type="tel" inputMode="tel" maxLength={16} value={v.phone} onChange={(e) => setV({ ...v, phone: e.target.value.replace(/[^\d+\s-]/g, "") })} placeholder="+91 98765 43210" /><p className="text-xs text-muted-foreground">Indian mobile, 10 digits.</p></div>
+        <div className="space-y-1.5"><Label htmlFor="ph">Mobile number</Label><Input id="ph" type="tel" inputMode="tel" maxLength={10} pattern="[6-9][0-9]{9}" value={v.phone} onChange={(e) => setV({ ...v, phone: e.target.value.replace(/\D/g, "").slice(0, 10) })} placeholder="9876543210" /><p className="text-xs text-muted-foreground">Exactly 10 digits, starting with 6, 7, 8 or 9.</p></div>
         <div className="space-y-1.5"><Label htmlFor="mi">Monthly income</Label><Input id="mi" type="number" min={0} value={v.monthly_income ?? ""} onChange={(e) => setV({ ...v, monthly_income: e.target.value === "" ? null : Number(e.target.value) })} /></div>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">

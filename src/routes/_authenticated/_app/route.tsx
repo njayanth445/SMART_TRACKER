@@ -1,3 +1,4 @@
+import { setStoredLang } from "@/components/AutoTranslate";
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useSignOut } from "@/lib/useSignOut";
@@ -35,6 +36,7 @@ function AppShell() {
   const navigate = useNavigate();
   const signOut = useSignOut();
   const lang = profile?.language;
+  useEffect(() => { if (lang) setStoredLang(lang); }, [lang]);
   const unread = notes?.filter((n) => !n.is_read).length ?? 0;
 
   useEffect(() => {
