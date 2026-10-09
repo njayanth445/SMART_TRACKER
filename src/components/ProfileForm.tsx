@@ -1,3 +1,4 @@
+import { setStoredLang } from "@/components/AutoTranslate";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -56,11 +57,12 @@ export function ProfileForm({ profile, onSubmit, submitting, submitLabel }: { pr
     if (!v.full_name.trim()) { toast.error("Please enter your name."); return; }
     let phone = v.phone.trim();
     if (phone) {
-      const n = normalizeIndianPhone(phone);
+      const n = /^[6-9]\d{9}$/.test(phone) ? normalizeIndianPhone(phone) : null;
       if (!n) { toast.error("Enter a valid 10-digit Indian mobile number (starts with 6, 7, 8 or 9)."); return; }
       phone = n;
     }
     if (v.monthly_income != null && v.monthly_income < 0) { toast.error("Income can't be negative."); return; }
+    setStoredLang(v.language);
     onSubmit({ ...v, full_name: v.full_name.trim().slice(0, 100), phone });
   }
 
