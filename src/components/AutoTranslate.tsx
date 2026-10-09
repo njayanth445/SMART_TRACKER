@@ -53,7 +53,7 @@ export function AutoTranslate() {
         if (v == null) continue;
         const known = store[a];
         if (known === undefined || (v !== known && v !== tr(lang, known))) store[a] = v;
-        const out = tr(lang, store[a]);
+        const out = tr(lang, store[a] ?? v);
         if (out !== v) el.setAttribute(a, out);
       }
       origAttr.set(el, store);
