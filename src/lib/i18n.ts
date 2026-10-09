@@ -48,3 +48,8 @@ export function formatLocalizedDate(date: Date, lang: string | undefined, option
 export function localizedMonths(lang: string | undefined, short = true) {
   return Array.from({ length: 12 }, (_, month) => new Date(2024, month, 1).toLocaleDateString(languageLocale(lang), { month: short ? "short" : "long" }));
 }
+/** Locale for the language remembered on this device (set from Settings). */
+export function appLocale() {
+  if (typeof window === "undefined") return "en-IN";
+  return languageLocale(localStorage.getItem("sl-lang") || "en");
+}

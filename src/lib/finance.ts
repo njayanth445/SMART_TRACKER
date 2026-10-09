@@ -1,3 +1,4 @@
+import { appLocale } from "@/lib/i18n";
 export const EXPENSE_CATEGORIES = [
   "Food",
   "Rent",
@@ -51,7 +52,7 @@ export type Income = {
 export type Budget = { id: string; category: string; amount: number; month: number; year: number };
 
 export function formatMoney(value: number, currency = "INR") {
-  return new Intl.NumberFormat(currency === "INR" ? "en-IN" : "en-US", {
+  return new Intl.NumberFormat(appLocale(), {
     style: "currency",
     currency,
     maximumFractionDigits: 0,

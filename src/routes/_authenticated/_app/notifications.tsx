@@ -1,3 +1,4 @@
+import { appLocale } from "@/lib/i18n";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { AlertTriangle, Bell, CheckCheck, Info, Siren, Trash2 } from "lucide-react";
@@ -42,7 +43,7 @@ function Notifications() {
                   <div className="min-w-0 flex-1">
                     <p className="font-medium">{n.title}</p>
                     <p className="text-sm text-muted-foreground">{n.message}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{new Date(n.created_at).toLocaleString()}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{new Date(n.created_at).toLocaleString(appLocale())}</p>
                   </div>
                   <button aria-label="Delete notification" onClick={(e) => { e.stopPropagation(); del.mutate(n.id); }} className="rounded-lg p-1 text-muted-foreground hover:text-destructive"><Trash2 className="h-4 w-4" /></button>
                 </li>
