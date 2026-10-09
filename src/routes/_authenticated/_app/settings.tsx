@@ -1,3 +1,4 @@
+import { setStoredLang } from "@/components/AutoTranslate";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -69,7 +70,7 @@ function Settings() {
       <Panel title="Language & currency">
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5"><Label>Language</Label>
-            <Select value={profile?.language ?? "en"} onValueChange={(v) => save.mutate({ language: v }, { onSuccess: () => toast.success("Language updated") })}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{LANGUAGES.map((l) => <SelectItem key={l.code} value={l.code}>{l.label}</SelectItem>)}</SelectContent></Select>
+            <Select value={profile?.language ?? "en"} onValueChange={(v) => { setStoredLang(v); save.mutate({ language: v }, { onSuccess: () => toast.success("Language updated") }); }}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{LANGUAGES.map((l) => <SelectItem key={l.code} value={l.code}>{l.label}</SelectItem>)}</SelectContent></Select>
           </div>
           <div className="space-y-1.5"><Label>Currency</Label>
             <Select value={profile?.currency ?? "INR"} onValueChange={(v) => save.mutate({ currency: v }, { onSuccess: () => toast.success("Currency updated") })}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{CURRENCIES.map((c) => <SelectItem key={c.code} value={c.code}>{c.label}</SelectItem>)}</SelectContent></Select>

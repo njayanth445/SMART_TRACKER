@@ -1,9 +1,15 @@
 import type { ReactNode } from "react";
 import { Logo } from "./Logo";
+import { setStoredLang, useStoredLang } from "./AutoTranslate";
+import { LANGUAGES } from "@/lib/finance";
 
 export function AuthCard({ title, subtitle, children, footer }: { title: string; subtitle?: string; children: ReactNode; footer?: ReactNode }) {
+  const lang = useStoredLang();
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4 py-10">
+    <div className="relative flex min-h-screen flex-col items-center justify-center px-4 py-10">
+      <select aria-label="Language" value={lang} onChange={(e) => setStoredLang(e.target.value)} className="absolute right-4 top-4 rounded-xl border border-input bg-background px-3 py-1.5 text-sm">
+        {LANGUAGES.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
+      </select>
       <div className="mb-8"><Logo /></div>
       <div className="glass w-full max-w-md rounded-3xl p-6 sm:p-8">
         <h1 className="text-2xl font-semibold">{title}</h1>
