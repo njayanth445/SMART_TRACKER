@@ -1,3 +1,4 @@
+import { formatPct } from "@/lib/i18n";
 import { createFileRoute } from "@tanstack/react-router";
 import { AlertTriangle, Lightbulb, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { EmptyState, LoadingBlock, PageHeader, Panel } from "@/components/ui-bits";
@@ -34,7 +35,7 @@ function Insights() {
   }
   if (totalInc > 0) {
     const net = totalInc - totalEx;
-    list.push({ icon: net >= 0 ? TrendingUp : TrendingDown, tone: net >= 0 ? "text-income" : "text-expense", text: `Your savings this month are ${formatMoney(net, cur)} — a savings rate of ${savingsRate(totalInc, totalEx).toFixed(1)}%.` });
+    list.push({ icon: net >= 0 ? TrendingUp : TrendingDown, tone: net >= 0 ? "text-income" : "text-expense", text: `Your savings this month are ${formatMoney(net, cur)} — a savings rate of ${formatPct(savingsRate(totalInc, totalEx))}.` });
   }
   if (prevTotal > 0 && monthEx.length) {
     const diff = ((totalEx - prevTotal) / prevTotal) * 100;

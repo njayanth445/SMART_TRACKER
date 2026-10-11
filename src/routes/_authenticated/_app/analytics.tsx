@@ -1,3 +1,4 @@
+import { formatPct } from "@/lib/i18n";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ArrowDownRight, ArrowUpRight, BarChart3, CalendarDays, Gauge, Minus, PiggyBank, Receipt, TrendingDown, Wallet } from "lucide-react";
@@ -50,7 +51,7 @@ function Delta({ current, previous, invert }: { current: number; previous: numbe
   const Icon = flat ? Minus : pct > 0 ? ArrowUpRight : ArrowDownRight;
   return (
     <span className={cn("inline-flex items-center gap-1 text-xs font-medium", flat ? "text-muted-foreground" : good ? "text-income" : "text-expense")}>
-      <Icon className="h-3.5 w-3.5" />{flat ? "Flat" : `${Math.abs(pct).toFixed(1)}%`}<span className="text-muted-foreground">vs prior</span>
+      <Icon className="h-3.5 w-3.5" />{flat ? "Flat" : formatPct(Math.abs(pct))}<span className="text-muted-foreground">vs prior</span>
     </span>
   );
 }
@@ -164,7 +165,7 @@ function Analytics() {
         <Kpi label="Total spent" value={formatMoney(total, cur)} icon={TrendingDown} tone="expense" footer={<Delta current={total} previous={prevTotal} invert />} />
         <Kpi label="Income" value={formatMoney(income, cur)} icon={Wallet} tone="income" footer={<Delta current={income} previous={prevIncome} />} />
         <Kpi label="Net cashflow" value={formatMoney(net, cur)} icon={PiggyBank} tone="primary" footer={<Delta current={net} previous={prevNet} />} />
-        <Kpi label="Savings rate" value={`${rate.toFixed(1)}%`} icon={Gauge} tone="accent" footer={<span className="text-xs text-muted-foreground">of income kept</span>} />
+        <Kpi label="Savings rate" value={formatPct(rate)} icon={Gauge} tone="accent" footer={<span className="text-xs text-muted-foreground">of income kept</span>} />
         <Kpi label="Daily burn rate" value={formatMoney(burn, cur)} icon={CalendarDays} footer={<span className="text-xs text-muted-foreground">avg per day</span>} />
         <Kpi label="Transactions" value={String(rows.length)} icon={Receipt} tone="accent" footer={<Delta current={rows.length} previous={prevRows.length} invert />} />
         <Kpi label="Top category" value={cats[0]?.name ?? "—"} icon={BarChart3} tone="income" footer={<span className="text-xs text-muted-foreground">{cats[0] ? `${((cats[0].value / total) * 100).toFixed(0)}% of spend` : "No spending yet"}</span>} />

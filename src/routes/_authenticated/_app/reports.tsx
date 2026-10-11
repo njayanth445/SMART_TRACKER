@@ -1,3 +1,4 @@
+import { formatPct } from "@/lib/i18n";
 import { appLocale } from "@/lib/i18n";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
@@ -81,7 +82,7 @@ function Reports() {
               <h2 className="mt-1 text-2xl font-semibold">{label}</h2>
             </div>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {[["Income", formatMoney(totalInc, cur), "text-income"], ["Expense", formatMoney(totalEx, cur), "text-expense"], ["Net savings", formatMoney(totalInc - totalEx, cur), ""], ["Savings rate", `${savingsRate(totalInc, totalEx).toFixed(1)}%`, ""]].map(([l, v, c]) => (
+              {[["Income", formatMoney(totalInc, cur), "text-income"], ["Expense", formatMoney(totalEx, cur), "text-expense"], ["Net savings", formatMoney(totalInc - totalEx, cur), ""], ["Savings rate", formatPct(savingsRate(totalInc, totalEx)), ""]].map(([l, v, c]) => (
                 <div key={l} className="rounded-2xl border border-border bg-background/50 p-3"><p className="text-xs text-muted-foreground">{l}</p><p className={`mt-1 font-display text-lg font-semibold ${c}`}>{v}</p></div>
               ))}
             </div>

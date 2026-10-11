@@ -1,3 +1,4 @@
+import { formatPct } from "@/lib/i18n";
 import { appLocale } from "@/lib/i18n";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PiggyBank, Percent, Plus, TrendingDown, TrendingUp, Wallet } from "lucide-react";
@@ -63,7 +64,7 @@ function Dashboard() {
         <StatCard label="Total income" value={formatMoney(totalInc, cur)} icon={TrendingUp} tone="income" />
         <StatCard label="Total expense" value={formatMoney(totalEx, cur)} icon={TrendingDown} tone="expense" />
         <StatCard label="Net savings" value={formatMoney(net, cur)} icon={Wallet} tone="primary" />
-        <StatCard label="Savings rate" value={`${rate.toFixed(1)}%`} icon={Percent} tone="accent" hint={totalInc ? undefined : "Add income to calculate"} />
+        <StatCard label="Savings rate" value={formatPct(rate)} icon={Percent} tone="accent" hint={totalInc ? undefined : "Add income to calculate"} />
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
