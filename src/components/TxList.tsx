@@ -1,4 +1,4 @@
-import { appLocale } from "@/lib/i18n";
+import { appLocale } from "@/lib/locale";
 import { useState } from "react";
 import { Languages, Loader2, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";

@@ -1,5 +1,5 @@
-import { formatPct } from "@/lib/i18n";
-import { appLocale } from "@/lib/i18n";
+import { formatPct } from "@/lib/locale";
+import { appLocale } from "@/lib/locale";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { FileDown, Printer } from "lucide-react";

@@ -1,4 +1,4 @@
-import { appLocale } from "@/lib/i18n";
+import { appLocale } from "@/lib/locale";
 export const EXPENSE_CATEGORIES = [
   "Food",
   "Rent",

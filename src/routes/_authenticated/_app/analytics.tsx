@@ -1,4 +1,4 @@
-import { formatPct } from "@/lib/i18n";
+import { formatPct } from "@/lib/locale";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ArrowDownRight, ArrowUpRight, BarChart3, CalendarDays, Gauge, Minus, PiggyBank, Receipt, TrendingDown, Wallet } from "lucide-react";
