@@ -4,7 +4,7 @@ import { streamText } from "ai";
 const LANG_NAMES: Record<string, string> = { en: "English", te: "Telugu", hi: "Hindi" };
 
 export async function translateWithAI(text: string, lang: string) {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env['LOVABLE_API_KEY'];
   if (!apiKey) throw new Error("Translation is not configured.");
   const provider = createOpenAI({
     baseURL: "https://ai.gateway.lovable.dev/v1",
