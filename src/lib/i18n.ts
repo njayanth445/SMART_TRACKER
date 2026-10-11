@@ -6,6 +6,7 @@ const nav = {
 
 const phrases: Record<"te" | "hi", Record<string, string>> = {
   te: {
+    "Translate description": "వివరణను అనువదించండి", "Translation failed.": "అనువాదం విఫలమైంది.",
     "Welcome back": "తిరిగి స్వాగతం", "Log in to manage your money.": "మీ డబ్బును నిర్వహించడానికి లాగిన్ అవ్వండి.", "Password": "పాస్‌వర్డ్", "Forgot password?": "పాస్‌వర్డ్ మర్చిపోయారా?", "Log in": "లాగిన్", "or": "లేదా", "Continue with Google": "Googleతో కొనసాగండి", "New here?": "కొత్తవారా?", "Create an account": "ఖాతా సృష్టించండి", "Create your account": "మీ ఖాతాను సృష్టించండి", "Start tracking in under a minute.": "ఒక్క నిమిషంలో ట్రాక్ చేయడం ప్రారంభించండి.", "Already have an account?": "ఇప్పటికే ఖాతా ఉందా?", "Confirm password": "పాస్‌వర్డ్ నిర్ధారించండి", "At least 8 characters.": "కనీసం 8 అక్షరాలు.", "Create account": "ఖాతా సృష్టించండి", "Complete your profile": "మీ ప్రొఫైల్ పూర్తి చేయండి", "A few details to personalise your ledger.": "మీ లెడ్జర్‌ను వ్యక్తిగతీకరించడానికి కొన్ని వివరాలు.", "Save & Continue": "సేవ్ చేసి కొనసాగండి", "Send reset link": "రీసెట్ లింక్ పంపండి", "Back to login": "లాగిన్‌కు తిరిగి", 
     "Exactly 10 digits, starting with 6, 7, 8 or 9.": "6, 7, 8 లేదా 9తో మొదలయ్యే సరిగ్గా 10 అంకెలు.", "Enter a valid 10-digit Indian mobile number (starts with 6, 7, 8 or 9).": "సరైన 10 అంకెల భారతీయ మొబైల్ నంబర్ నమోదు చేయండి (6, 7, 8 లేదా 9తో మొదలవ్వాలి).", 
     "there": "మిత్రమా", "Here's your money in {month}.": "{month}లో మీ డబ్బు వివరాలు ఇవి.", "Total income": "మొత్తం ఆదాయం", "Total expense": "మొత్తం ఖర్చు", "Net savings": "నికర పొదుపు", "Savings rate": "పొదుపు శాతం", "Add income to calculate": "లెక్కించడానికి ఆదాయం జోడించండి", "of income saved": "ఆదాయంలో పొదుపు", "{amount} saved": "{amount} పొదుపు", "Budget used": "బడ్జెట్ వినియోగం", "{spent} of {budget}": "{budget}లో {spent}", "No budgets set": "బడ్జెట్లు లేవు", "Month progress": "నెల పురోగతి", "Day {day} of {total}": "{total} రోజులలో {day}వ రోజు", "Projected spend {amount}": "అంచనా ఖర్చు {amount}", "Daily spending this month": "ఈ నెల రోజువారీ ఖర్చు", "Expense by category": "వర్గాల వారీ ఖర్చు", "No expenses this month": "ఈ నెల ఖర్చులు లేవు", "Add an expense to see where your money goes.": "మీ డబ్బు ఎక్కడ ఖర్చవుతుందో చూడటానికి ఖర్చును జోడించండి.", "Income vs expense": "ఆదాయం - ఖర్చు", "Monthly spending trend": "నెలవారీ ఖర్చు ధోరణి", "Budget usage": "బడ్జెట్ వినియోగం", "Manage": "నిర్వహించండి", "No budgets yet": "ఇంకా బడ్జెట్లు లేవు", "Set category budgets to track your limits.": "పరిమితులను గమనించడానికి వర్గ బడ్జెట్లు పెట్టండి.", "Set budget": "బడ్జెట్ పెట్టండి", "Recent transactions": "ఇటీవలి లావాదేవీలు", "View all": "అన్నీ చూడండి", "No transactions yet": "ఇంకా లావాదేవీలు లేవు", "Start by adding your income or first expense.": "మీ ఆదాయం లేదా మొదటి ఖర్చును జోడించడం ప్రారంభించండి.",
@@ -23,6 +24,7 @@ const phrases: Record<"te" | "hi", Record<string, string>> = {
     "Welcome to Smart Ledger 👋": "Smart Ledgerకు స్వాగతం 👋", "Let's set up your financial workspace.": "మీ ఆర్థిక స్థలాన్ని సిద్ధం చేద్దాం.", "Add Income": "ఆదాయం జోడించండి", "Add Expense": "ఖర్చు జోడించండి", "Set Monthly Budget": "నెలవారీ బడ్జెట్ పెట్టండి", "Skip for now": "ప్రస్తుతానికి దాటవేయండి", "Account menu": "ఖాతా మెను",
   },
   hi: {
+    "Translate description": "विवरण का अनुवाद करें", "Translation failed.": "अनुवाद विफल रहा।",
     },
 };
 
@@ -52,4 +54,8 @@ export function localizedMonths(lang: string | undefined, short = true) {
 export function appLocale() {
   if (typeof window === "undefined") return "en-IN";
   return languageLocale(localStorage.getItem("sl-lang") || "en");
+}
+
+export function formatPct(value: number) {
+  return new Intl.NumberFormat(appLocale(), { maximumFractionDigits: 1, minimumFractionDigits: 1 }).format(value || 0) + "%";
 }
