@@ -1,4 +1,4 @@
-import { formatPct } from "@/lib/i18n";
+import { formatPct } from "@/lib/locale";
 import { createFileRoute } from "@tanstack/react-router";
 import { AlertTriangle, Lightbulb, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { EmptyState, LoadingBlock, PageHeader, Panel } from "@/components/ui-bits";

@@ -1,5 +1,5 @@
-import { formatPct } from "@/lib/i18n";
-import { appLocale } from "@/lib/i18n";
+import { formatPct } from "@/lib/locale";
+import { appLocale } from "@/lib/locale";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PiggyBank, Percent, Plus, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";

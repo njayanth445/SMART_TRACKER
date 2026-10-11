@@ -1,4 +1,4 @@
-import { appLocale } from "@/lib/i18n";
+import { appLocale } from "@/lib/locale";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { AlertTriangle, Bell, CheckCheck, Info, Siren, Trash2 } from "lucide-react";

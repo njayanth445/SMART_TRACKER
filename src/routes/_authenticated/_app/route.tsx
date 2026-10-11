@@ -1,4 +1,4 @@
-import { appLocale } from "@/lib/i18n";
+import { appLocale } from "@/lib/locale";
 import { setStoredLang } from "@/components/AutoTranslate";
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
