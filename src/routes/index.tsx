@@ -12,6 +12,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Track income and expenses, set budgets, see analytics and export reports — all in one secure place." },
       { property: "og:title", content: "Smart Ledger — Smart Personal Expense Tracker" },
       { property: "og:description", content: "Track income and expenses, set budgets, see analytics and export reports." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Landing,

@@ -12,7 +12,7 @@ import { EXPENSE_CATEGORIES, PAYMENT_METHODS, byCategory, formatMoney, monthlySe
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/_app/analytics")({
-  head: () => ({ meta: [{ title: "Analytics — Smart Ledger" }, { name: "description", content: "An interactive dashboard of your spending, income and budget pacing." }, { property: "og:title", content: "Analytics — Smart Ledger" }, { property: "og:description", content: "An interactive dashboard of your spending, income and budget pacing." }] }),
+  head: () => ({ meta: [{ title: "Analytics — Smart Ledger" }, { name: "description", content: "An interactive dashboard of your spending, income and budget pacing." }, { property: "og:title", content: "Analytics — Smart Ledger" }, { property: "og:description", content: "An interactive dashboard of your spending, income and budget pacing." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Analytics,
 });
 

@@ -6,6 +6,7 @@ const nav = {
 
 const phrases: Record<"te" | "hi", Record<string, string>> = {
   te: {
+    "Monthly category limits (optional)": "నెలవారీ వర్గ పరిమితులు (ఐచ్ఛికం)", "Budget limit": "బడ్జెట్ పరిమితి", "No limit": "పరిమితి లేదు", "Enter a valid budget limit greater than 0.": "0 కంటే ఎక్కువ సరైన బడ్జెట్ పరిమితిని నమోదు చేయండి.", "Full name": "పూర్తి పేరు",
     "Translate description": "వివరణను అనువదించండి", "Translation failed.": "అనువాదం విఫలమైంది.",
     "Welcome back": "తిరిగి స్వాగతం", "Log in to manage your money.": "మీ డబ్బును నిర్వహించడానికి లాగిన్ అవ్వండి.", "Password": "పాస్‌వర్డ్", "Forgot password?": "పాస్‌వర్డ్ మర్చిపోయారా?", "Log in": "లాగిన్", "or": "లేదా", "Continue with Google": "Googleతో కొనసాగండి", "New here?": "కొత్తవారా?", "Create an account": "ఖాతా సృష్టించండి", "Create your account": "మీ ఖాతాను సృష్టించండి", "Start tracking in under a minute.": "ఒక్క నిమిషంలో ట్రాక్ చేయడం ప్రారంభించండి.", "Already have an account?": "ఇప్పటికే ఖాతా ఉందా?", "Confirm password": "పాస్‌వర్డ్ నిర్ధారించండి", "At least 8 characters.": "కనీసం 8 అక్షరాలు.", "Create account": "ఖాతా సృష్టించండి", "Complete your profile": "మీ ప్రొఫైల్ పూర్తి చేయండి", "A few details to personalise your ledger.": "మీ లెడ్జర్‌ను వ్యక్తిగతీకరించడానికి కొన్ని వివరాలు.", "Save & Continue": "సేవ్ చేసి కొనసాగండి", "Send reset link": "రీసెట్ లింక్ పంపండి", "Back to login": "లాగిన్‌కు తిరిగి", 
     "Exactly 10 digits, starting with 6, 7, 8 or 9.": "6, 7, 8 లేదా 9తో మొదలయ్యే సరిగ్గా 10 అంకెలు.", "Enter a valid 10-digit Indian mobile number (starts with 6, 7, 8 or 9).": "సరైన 10 అంకెల భారతీయ మొబైల్ నంబర్ నమోదు చేయండి (6, 7, 8 లేదా 9తో మొదలవ్వాలి).", 
@@ -24,6 +25,7 @@ const phrases: Record<"te" | "hi", Record<string, string>> = {
     "Welcome to Smart Ledger 👋": "Smart Ledgerకు స్వాగతం 👋", "Let's set up your financial workspace.": "మీ ఆర్థిక స్థలాన్ని సిద్ధం చేద్దాం.", "Add Income": "ఆదాయం జోడించండి", "Add Expense": "ఖర్చు జోడించండి", "Set Monthly Budget": "నెలవారీ బడ్జెట్ పెట్టండి", "Skip for now": "ప్రస్తుతానికి దాటవేయండి", "Account menu": "ఖాతా మెను",
   },
   hi: {
+    "Monthly category limits (optional)": "मासिक श्रेणी सीमाएँ (वैकल्पिक)", "Budget limit": "बजट सीमा", "No limit": "कोई सीमा नहीं", "Enter a valid budget limit greater than 0.": "0 से अधिक मान्य बजट सीमा दर्ज करें।",
     "Translate description": "विवरण का अनुवाद करें", "Translation failed.": "अनुवाद विफल रहा।",
     },
 };

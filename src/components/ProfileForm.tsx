@@ -1,5 +1,5 @@
-import { setStoredLang } from "@/components/AutoTranslate";
-import { useEffect, useState } from "react";
+import { getStoredLang, setStoredLang, useStoredLang } from "@/components/AutoTranslate";
+import { useEffect, useState, type ReactNode } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,8 @@ function resizeToDataUrl(file: File): Promise<string> {
       const size = 160;
       const c = document.createElement("canvas");
       c.width = size; c.height = size;
-      const ctx = c.getContext("2d")!;
+      const ctx = c.getContext("2d");
+      if (!ctx) { reject(new Error("Unable to resize photo")); return; }
       const s = Math.min(img.width, img.height);
       ctx.drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 0, 0, size, size);
       resolve(c.toDataURL("image/jpeg", 0.8));
@@ -31,7 +32,8 @@ function resizeToDataUrl(file: File): Promise<string> {
   });
 }
 
-export function ProfileForm({ profile, onSubmit, submitting, submitLabel }: { profile: Profile | null; onSubmit: (v: ProfileFormValues) => void; submitting: boolean; submitLabel: string }) {
+export function ProfileForm({ profile, onSubmit, submitting, submitLabel, children }: { profile: Profile | null; onSubmit: (v: ProfileFormValues) => void; submitting: boolean; submitLabel: string; children?: ReactNode }) {
+  const storedLang = useStoredLang();
   const [v, setV] = useState<ProfileFormValues>({
     full_name: profile?.full_name ?? "",
     phone: (profile?.phone ?? "").replace(/\D/g, "").slice(-10),
@@ -41,6 +43,7 @@ export function ProfileForm({ profile, onSubmit, submitting, submitLabel }: { pr
     avatar_url: profile?.avatar_url ?? null,
   });
   const [email, setEmail] = useState(profile?.email ?? "");
+  useEffect(() => { setV((current) => ({ ...current, language: getStoredLang() })); }, [storedLang]);
   useEffect(() => {
     if (!email) supabase.auth.getUser().then(({ data }) => { if (data.user?.email) setEmail(data.user.email); });
   }, [email]);
@@ -88,9 +91,10 @@ export function ProfileForm({ profile, onSubmit, submitting, submitLabel }: { pr
           <Select value={v.currency} onValueChange={(c) => setV({ ...v, currency: c })}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{CURRENCIES.map((c) => <SelectItem key={c.code} value={c.code}>{c.label}</SelectItem>)}</SelectContent></Select>
         </div>
         <div className="space-y-1.5"><Label>Language</Label>
-          <Select value={v.language} onValueChange={(l) => setV({ ...v, language: l })}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{LANGUAGES.map((l) => <SelectItem key={l.code} value={l.code}>{l.label}</SelectItem>)}</SelectContent></Select>
+          <Select value={v.language} onValueChange={(l) => { setV({ ...v, language: l }); setStoredLang(l); }}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{LANGUAGES.map((l) => <SelectItem key={l.code} value={l.code}>{l.label}</SelectItem>)}</SelectContent></Select>
         </div>
       </div>
+      {children}
       <Button type="submit" disabled={submitting} className="w-full rounded-xl">{submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}{submitLabel}</Button>
     </form>
   );

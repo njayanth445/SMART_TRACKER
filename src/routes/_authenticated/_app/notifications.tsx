@@ -9,7 +9,7 @@ import { useDeleteRow, useNotifications } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/_app/notifications")({
-  head: () => ({ meta: [{ title: "Notifications — Smart Ledger" }, { name: "description", content: "Budget alerts and updates." }, { property: "og:title", content: "Notifications — Smart Ledger" }, { property: "og:description", content: "Budget alerts and updates." }] }),
+  head: () => ({ meta: [{ title: "Notifications — Smart Ledger" }, { name: "description", content: "Budget alerts and updates." }, { property: "og:title", content: "Notifications — Smart Ledger" }, { property: "og:description", content: "Budget alerts and updates." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Notifications,
 });
 

@@ -3,7 +3,7 @@ import { IncomeForm } from "@/components/TxForms";
 import { PageHeader, Panel } from "@/components/ui-bits";
 
 export const Route = createFileRoute("/_authenticated/_app/income/add")({
-  head: () => ({ meta: [{ title: "Add income — Smart Ledger" }, { name: "description", content: "Record new income." }, { property: "og:title", content: "Add income — Smart Ledger" }, { property: "og:description", content: "Record new income." }] }),
+  head: () => ({ meta: [{ title: "Add income — Smart Ledger" }, { name: "description", content: "Record new income." }, { property: "og:title", content: "Add income — Smart Ledger" }, { property: "og:description", content: "Record new income." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: () => {
     const nav = useNavigate();
     return (

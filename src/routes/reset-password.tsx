@@ -14,6 +14,8 @@ export const Route = createFileRoute("/reset-password")({
       { name: "description", content: "Choose a new password for Smart Ledger." },
       { property: "og:title", content: "Set new password — Smart Ledger" },
       { property: "og:description", content: "Choose a new password for Smart Ledger." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Reset,

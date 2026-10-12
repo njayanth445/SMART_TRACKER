@@ -16,6 +16,8 @@ export const Route = createFileRoute("/signup")({
       { name: "description", content: "Create your free Smart Ledger account." },
       { property: "og:title", content: "Create account — Smart Ledger" },
       { property: "og:description", content: "Create your free Smart Ledger account." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Signup,
