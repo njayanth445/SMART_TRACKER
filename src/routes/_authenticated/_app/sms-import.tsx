@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/_authenticated/_app/sms-import")({
   validateSearch: (s: Record<string, unknown>): { text?: string } =>
     typeof s["text"] === "string" ? { text: (s["text"] as string).slice(0, 5000) } : {},
-  head: () => ({ meta: [{ title: "Add from bank SMS — Smart Ledger" }, { name: "description", content: "Turn bank SMS like 'Rs 500 credited' into income and expenses." }, { property: "og:title", content: "Add from bank SMS — Smart Ledger" }, { property: "og:description", content: "Turn bank SMS into income and expenses." }] }),
+  head: () => ({ meta: [{ title: "Add from bank SMS — Smart Ledger" }, { name: "description", content: "Turn bank SMS like 'Rs 500 credited' into income and expenses." }, { property: "og:title", content: "Add from bank SMS — Smart Ledger" }, { property: "og:description", content: "Turn bank SMS into income and expenses." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: SmsImport,
 });
 

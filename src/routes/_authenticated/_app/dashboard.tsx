@@ -11,7 +11,7 @@ import { budgetStatus, byCategory, formatMoney, inMonth, monthlySeries, savingsR
 import { t } from "@/lib/i18n";
 
 export const Route = createFileRoute("/_authenticated/_app/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard — Smart Ledger" }, { name: "description", content: "Your monthly money overview." }, { property: "og:title", content: "Dashboard — Smart Ledger" }, { property: "og:description", content: "Your monthly money overview." }] }),
+  head: () => ({ meta: [{ title: "Dashboard — Smart Ledger" }, { name: "description", content: "Your monthly money overview." }, { property: "og:title", content: "Dashboard — Smart Ledger" }, { property: "og:description", content: "Your monthly money overview." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Dashboard,
 });
 

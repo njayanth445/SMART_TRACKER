@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { BudgetVsSpent, Gauge } from "@/components/Charts";
 
 export const Route = createFileRoute("/_authenticated/_app/budgets")({
-  head: () => ({ meta: [{ title: "Budgets — Smart Ledger" }, { name: "description", content: "Set and track monthly category budgets." }, { property: "og:title", content: "Budgets — Smart Ledger" }, { property: "og:description", content: "Set and track monthly category budgets." }] }),
+  head: () => ({ meta: [{ title: "Budgets — Smart Ledger" }, { name: "description", content: "Set and track monthly category budgets." }, { property: "og:title", content: "Budgets — Smart Ledger" }, { property: "og:description", content: "Set and track monthly category budgets." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Budgets,
 });
 

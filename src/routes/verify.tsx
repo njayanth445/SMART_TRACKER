@@ -13,6 +13,8 @@ export const Route = createFileRoute("/verify")({
       { name: "description", content: "Confirm your email address to activate Smart Ledger." },
       { property: "og:title", content: "Verify your email — Smart Ledger" },
       { property: "og:description", content: "Confirm your email address to activate Smart Ledger." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Verify,

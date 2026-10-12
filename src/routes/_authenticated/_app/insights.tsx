@@ -6,7 +6,7 @@ import { useBudgets, useCurrency, useExpenses, useIncome } from "@/lib/data";
 import { byCategory, formatMoney, inMonth, savingsRate, sum } from "@/lib/finance";
 
 export const Route = createFileRoute("/_authenticated/_app/insights")({
-  head: () => ({ meta: [{ title: "Insights — Smart Ledger" }, { name: "description", content: "Facts about your spending, from your own data." }, { property: "og:title", content: "Insights — Smart Ledger" }, { property: "og:description", content: "Facts about your spending, from your own data." }] }),
+  head: () => ({ meta: [{ title: "Insights — Smart Ledger" }, { name: "description", content: "Facts about your spending, from your own data." }, { property: "og:title", content: "Insights — Smart Ledger" }, { property: "og:description", content: "Facts about your spending, from your own data." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Insights,
 });
 

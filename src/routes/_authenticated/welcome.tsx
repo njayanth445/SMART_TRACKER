@@ -4,7 +4,7 @@ import { AuthCard } from "@/components/AuthCard";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/welcome")({
-  head: () => ({ meta: [{ title: "Welcome — Smart Ledger" }, { name: "description", content: "Set up your financial workspace." }, { property: "og:title", content: "Welcome — Smart Ledger" }, { property: "og:description", content: "Set up your financial workspace." }] }),
+  head: () => ({ meta: [{ title: "Welcome — Smart Ledger" }, { name: "description", content: "Set up your financial workspace." }, { property: "og:title", content: "Welcome — Smart Ledger" }, { property: "og:description", content: "Set up your financial workspace." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Welcome,
 });
 

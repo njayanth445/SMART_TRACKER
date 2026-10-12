@@ -14,7 +14,7 @@ import { useCurrency, useExpenses, useIncome, useProfile } from "@/lib/data";
 import { MONTHS, byCategory, downloadFile, formatMoney, savingsRate, sum, toCSV, todayISO } from "@/lib/finance";
 
 export const Route = createFileRoute("/_authenticated/_app/reports")({
-  head: () => ({ meta: [{ title: "Reports — Smart Ledger" }, { name: "description", content: "Daily, monthly and yearly financial reports." }, { property: "og:title", content: "Reports — Smart Ledger" }, { property: "og:description", content: "Daily, monthly and yearly financial reports." }] }),
+  head: () => ({ meta: [{ title: "Reports — Smart Ledger" }, { name: "description", content: "Daily, monthly and yearly financial reports." }, { property: "og:title", content: "Reports — Smart Ledger" }, { property: "og:description", content: "Daily, monthly and yearly financial reports." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Reports,
 });
 

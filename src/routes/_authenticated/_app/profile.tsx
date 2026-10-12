@@ -5,7 +5,7 @@ import { LoadingBlock, PageHeader, Panel } from "@/components/ui-bits";
 import { useProfile, useUpdateProfile } from "@/lib/data";
 
 export const Route = createFileRoute("/_authenticated/_app/profile")({
-  head: () => ({ meta: [{ title: "Profile — Smart Ledger" }, { name: "description", content: "Manage your personal details." }, { property: "og:title", content: "Profile — Smart Ledger" }, { property: "og:description", content: "Manage your personal details." }] }),
+  head: () => ({ meta: [{ title: "Profile — Smart Ledger" }, { name: "description", content: "Manage your personal details." }, { property: "og:title", content: "Profile — Smart Ledger" }, { property: "og:description", content: "Manage your personal details." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: Profile,
 });
 
